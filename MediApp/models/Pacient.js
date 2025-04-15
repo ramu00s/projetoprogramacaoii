@@ -1,6 +1,6 @@
 import { mongoose } from "mongoose";
 
-const Schema = moongose.Schema;
+const Schema = mongoose.Schema;  // Alteração aqui
 
 const pacientSchema = ({
     name: {

@@ -1,12 +1,12 @@
-import { express } from "express";
+import express from "express";  // Importação do Express
+import AppointmentService from '../services/AppointmentService.js'; // Corrigido para o nome correto do serviço
 
-import AppoimentService from "../services/AppoimentService";
+let router = express.Router(); // Criação do roteador
 
-let router = express.Router();
-
-router.get('/appointments', async(req, res) => {
+// Rota para obter todos os agendamentos
+router.get('/appointments', async (req, res) => {
     try {
-        const appointments = await AppoimentService.getAllAppointments();
+        const appointments = await AppointmentService.getAllAppointments(); // Corrigido para AppointmentService
         res.send(appointments);
     } catch (error) {
         console.log(error);
@@ -14,10 +14,11 @@ router.get('/appointments', async(req, res) => {
     }
 });
 
-router.get('/getAppointment/:id', async(req, res) => {
-    const {id} = req.params;
+// Rota para obter um agendamento específico
+router.get('/getAppointment/:id', async (req, res) => {
+    const { id } = req.params;
     try {
-        const appointment = await AppoimentService.getAppointment(id);
+        const appointment = await AppointmentService.getAppointment(id); // Corrigido para AppointmentService
         res.send(appointment);
     } catch (error) {
         console.log(error);
@@ -25,22 +26,24 @@ router.get('/getAppointment/:id', async(req, res) => {
     }
 });
 
-router.post('/postAppointment', async(req, res) => {
-    const {date, doctorId, pacientId} = req.body;
+// Rota para criar um novo agendamento
+router.post('/postAppointment', async (req, res) => {
+    const { date, doctorId, pacientId } = req.body;
     try {
-        const appointment = await AppoimentService.saveAppointment({date, doctorId, pacientId});
-        res.send(appiontment);
+        const appointment = await AppointmentService.saveAppointment({ date, doctorId, pacientId }); // Corrigido para AppointmentService
+        res.send(appointment); // Corrigido 'appiontment' para 'appointment'
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
     }
 });
 
-router.put('/appointment/:id', async(req, res) => {
-    const {id} = req.params;
-    const {date, doctorId, pacientId} = req.body;
+// Rota para atualizar um agendamento
+router.put('/appointment/:id', async (req, res) => {
+    const { id } = req.params;
+    const { date, doctorId, pacientId } = req.body;
     try {
-        const appointment = await AppoimentService.updateAppointment(id, {date, doctorId, pacientId});
+        const appointment = await AppointmentService.updateAppointment(id, { date, doctorId, pacientId }); // Corrigido para AppointmentService
         res.send(appointment);
     } catch (error) {
         console.log(error);
@@ -48,10 +51,11 @@ router.put('/appointment/:id', async(req, res) => {
     }
 });
 
-router.delete('/appointment/:id', async(req, res) => {
-    const {id} = req.params;
+// Rota para deletar um agendamento
+router.delete('/appointment/:id', async (req, res) => {
+    const { id } = req.params;
     try {
-        const appointment = await AppoimentService.deleteAppointment(id);
+        const appointment = await AppointmentService.deleteAppointment(id); // Corrigido para AppointmentService
         res.send(appointment);
     } catch (error) {
         console.log(error);
@@ -59,14 +63,15 @@ router.delete('/appointment/:id', async(req, res) => {
     }
 });
 
-router.put('/reschedule/:id', async(req, res) => {
-    const (id) = req.params;
-    const (date) = req.body;
+// Rota para reagendar um agendamento
+router.put('/reschedule/:id', async (req, res) => {
+    const { id } = req.params;
+    const { date } = req.body;
     try {
-        let appointment = await AppoimentService.getAppointment(id);
+        let appointment = await AppointmentService.getAppointment(id); // Corrigido para AppointmentService
         appointment.date = date;
 
-        appointment = await AppoimentService.updateAppointments({id, date});
+        appointment = await AppointmentService.updateAppointment(id, { date }); // Corrigido para AppointmentService
         res.send(appointment);
     } catch (error) {
         console.log(error);
@@ -74,4 +79,5 @@ router.put('/reschedule/:id', async(req, res) => {
     }
 });
 
-export default router();
+// Exportando o roteador
+export default router;

@@ -1,4 +1,4 @@
-import { Appointment } from "../models/Appointment";
+import Appointment from "../models/Appointment.js";
 
 const getAllAppointment = async () => {
     return await Appointment.find();
